@@ -38,7 +38,7 @@ function reset() {
   // - add each card to the deck
   for (var i = 0; i < cards.length; i++) {
     deck.appendChild(cards[i]);
-//    cards[i].classList('card');
+    cards[i].className = 'card';
   }
 
   // create/reset timer
@@ -54,7 +54,7 @@ restart.addEventListener('click', reset);
 // click event for New Game button on modal
 
 // reset game on page load
-window.onload = reset();
+//window.onload = reset();
 
 // Create Timer
 function timer() {
