@@ -4,7 +4,7 @@
 
 // Select from DOM
 //   - .stars - filled stars vs empty stars
-const stars = document.querySelector('.stars');
+const stars = document.getElementsByClassName('star');
 //   - .moves
 let movesSpan = document.getElementsByClassName('moves');
 //   - .restart
@@ -26,8 +26,7 @@ const totalPairs = cards.length / 2;
 let openCardsList = [];
 let matchedCardsList = [];
 
-// Display the cards on the page
-// reset board
+// Display the cards on the page and reset board
 function reset() {
   // - shuffle the list of cards using the provided "shuffle" method below
   cards = shuffle(cards);
@@ -66,6 +65,9 @@ function timer() {
 // Reset stars
 function resetStars() {
   // change fa class using classList.toggle
+  for (var i = 0; i < stars.length; i++) {
+    stars[i].className = 'star fa fa-star';
+  }
 }
 
 // Reset counters
@@ -99,14 +101,14 @@ function shuffle(array) {
 for (var i = 0; i < cards.length; i++) {
   cards[i].addEventListener('click', cardFlip);
 }
-  //   function() {
-  //     // flip card
-  //     cardFlip(cards[i]);
-  //     // check card - a match - add to open card list
-  //     // check card - not a match
-  //     // check if all matches are met
-  //     checkCard(cards[i]);
-  //   });
+//   function() {
+//     // flip card
+//     cardFlip(cards[i]);
+//     // check card - a match - add to open card list
+//     // check card - not a match
+//     // check if all matches are met
+//     checkCard(cards[i]);
+//   });
 
 // Flip Card
 function cardFlip() {
