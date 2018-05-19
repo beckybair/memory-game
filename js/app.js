@@ -1,47 +1,52 @@
 /*
- * Create a list that holds all of your cards
- */
+* App JavaScript file
+*/
+
+// Select from DOM
+//   - .stars - filled stars vs empty stars
+const stars = document.querySelector('.stars');
+//   - .moves
+let movesSpan = document.getElementsByClassName('moves');
+//   - .restart
 const restart = document.querySelector('.restart');
+//   - .card  -  * Create a list that holds all of your cards
 let deck = document.querySelector('.deck');
 let card = deck.querySelectorAll('.card');
 let cards = [...card];
 
-// Select from DOM
-//   - .stars - filled stars vs empty stars
-//   - .moves
-//   - .restart
-//   - .card
-
-// Create:
-//  - Timer
-//    - start timer
-//    - stop timer
-//    - total time
-//  - Counter
+// Create Counters
 //    - total number of moves / tries
+let totalMoves = 0;
 //    - number of pairs matched
+let pairs = 0;
+//    - total # of pairs
+const totalPairs = cards.length / 2;
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
-*/
+// Open Cards and Matched Cards lists/arrays
+let openCardsList = [];
+let matchedCardsList = [];
 
+// Display the cards on the page
+// reset board
 function reset() {
-  // reset board
-  let cardList = shuffle(cards);
+  // - shuffle the list of cards using the provided "shuffle" method below
+  cards = shuffle(cards);
+  // - loop through each card and remove cards from deck
   while (deck.hasChildNodes()) {
     deck.removeChild(deck.lastChild);
   }
-  for (var i = 0; i < cardList.length; i++) {
-    deck.appendChild(cardList[i]);
+  // - add each card to the deck
+  for (var i = 0; i < cards.length; i++) {
+    deck.appendChild(cards[i]);
+//    cards[i].classList('card');
   }
 
-  // reset timer
+  // create/reset timer
+  timer();
   // reset stars
+  resetStars();
   // reset counters
-
+  resetCounters();
 }
 // click event for restart icon
 restart.addEventListener('click', reset);
@@ -49,7 +54,29 @@ restart.addEventListener('click', reset);
 // click event for New Game button on modal
 
 // reset game on page load
+window.onload = reset();
 
+// Create Timer
+function timer() {
+  // start timer
+  // stop timer
+  // total time
+}
+
+// Reset stars
+function resetStars() {
+  // change fa class using classList.toggle
+}
+
+// Reset counters
+function resetCounters() {
+  // totalMoves
+  totalMoves = 0;
+  // movesSpan
+  movesSpan[0].innerHTML = totalMoves.toString();
+  // pairs
+  pairs = 0;
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -68,50 +95,59 @@ function shuffle(array) {
   return array;
 }
 
-
 // set up the event listener for a card. If a card is clicked:
 for (var i = 0; i < cards.length; i++) {
-  cards[i].addEventListener('click', function () {
-    // flip card
-    // check card - a match - add to open card list
-    // check card - not a match
-    // check if all matches are met
-  });
+  cards[i].addEventListener('click', cardFlip);
 }
+  //   function() {
+  //     // flip card
+  //     cardFlip(cards[i]);
+  //     // check card - a match - add to open card list
+  //     // check card - not a match
+  //     // check if all matches are met
+  //     checkCard(cards[i]);
+  //   });
 
 // Flip Card
 function cardFlip() {
   // change classes in classList to flip card - use .toggle
   // display the card's symbol
+  this.classList.toggle('open');
+  this.classList.toggle('show');
+  //this.classList.toggle('match');
 }
 
 // Add to "openCards" list
-function checkCard() {
+function checkCard(cardChecked) {
   // add the card to a *list* of "open" cards
+  openCardsList.push(cardChecked);
+
   // if the list already has another card, check to see if the two cards match
-  // if the cards do match, lock the cards in the open position (cardMatched)
-  // if the cards do not match, remove the cards from the list and hide the card's symbol (cardNotMatched)
-  // increment the move counter and display it on the page (moves)
-  // if all cards have matched, display a message with the final score (allMatched and modal)
-
+  if (openCardsList.length > 1) {
+    // if the cards do match, lock the cards in the open position (cardMatched)
+    // update pairs count by 1
+    pairs++;
+    // if the cards do not match, remove the cards from the list and hide the card's symbol (cardNotMatched)
+    // increment the move counter and display it on the page (moves)
+    totalMoves++;
+    movesSpan[0].innerHTML = totalMoves.toString();
+    // if all cards have matched, display a message with the final score (allMatched and modal)
+    if ((pairs = totalPairs)) {
+      // Display modal
+      modal();
+    }
+  }
 }
 
-function cardMatched() {
+function cardMatched() {}
 
-}
+function cardNotMatched() {}
 
-function cardNotMatched() {
-
-}
-
-function moves() {
-
-}
+function moves() {}
 
 function allMatched() {
   // Total pairs = 8
   //   - if pairs = 8 then stop and show modal, else continue
-
 }
 
 function checkStars() {
@@ -120,7 +156,6 @@ function checkStars() {
   //   - 9-10 = 2 stars
   //   - 11-12 = 1 star
   //   - >12 = no stars
-
 }
 
 // Setup Modal and display
@@ -130,9 +165,7 @@ function modal() {
   // - Time it took
   // - Star rating
   // - Number of moves
-  
 }
-
 
 /*
  * DONE - Use shuffle to random the cards
