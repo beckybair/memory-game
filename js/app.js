@@ -2,8 +2,9 @@
  * Create a list that holds all of your cards
  */
 const restart = document.querySelector('.restart');
-let list = document.querySelectorAll('.card');
-let cardList = Array.prototype.slice.call(document.querySelectorAll('.card'));
+let deck = document.querySelector('.deck');
+let card = deck.querySelectorAll('.card');
+let cards = [...card];
 
 /*
  * Display the cards on the page
@@ -12,16 +13,16 @@ let cardList = Array.prototype.slice.call(document.querySelectorAll('.card'));
  *   - add each card's HTML to the page
  */
 function reset() {
-  cardList = shuffle(cardList);
-  for (var i = 0; i < list.length; i++) {
-    list[i].outerHTML = cardList[i].outerHTML;
+  let cardList = shuffle(cards);
+  while (deck.hasChildNodes()) {
+    deck.removeChild(deck.lastChild);
   }
-  console.log(list);
-  
+  for (var i = 0; i < cardList.length; i++) {
+    deck.appendChild(cardList[i]);
+  }
 }
 
 restart.addEventListener('click', reset);
-
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -61,11 +62,7 @@ function shuffle(array) {
         *   - Number of moves
  */
 
-
-
-
-
- /*
+/*
  * DONE - Use shuffle to random the cards
  * Mobile first - then tablet - then desktop
  * Update Readme.md
