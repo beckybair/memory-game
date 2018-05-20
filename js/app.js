@@ -21,6 +21,13 @@ let totalMoves = 0;
 let pairs = 0;
 //    - total # of pairs
 const totalPairs = cards.length / 2;
+//    - timer
+let min = document.getElementById('min');
+let sec = document.getElementById('sec');
+let m = '0';
+let s = '0';
+let totalSecs = 0;
+let setTimer;
 
 // Open Cards and Matched Cards lists/arrays
 let openCardsList = [];
@@ -41,7 +48,12 @@ function reset() {
   }
 
   // create/reset timer
-  timer();
+  min.innerHTML = '00';
+  sec.innerHTML = '00';
+  m = '0';
+  s = '0';
+  clearInterval(setTimer);
+
   // reset stars
   resetStars();
   // reset counters
@@ -49,6 +61,7 @@ function reset() {
 }
 // click event for restart icon
 restart.addEventListener('click', reset);
+deck.addEventListener('click', startTimer);
 
 // click event for New Game button on modal
 
@@ -57,9 +70,19 @@ restart.addEventListener('click', reset);
 
 // Create Timer
 function timer() {
+  totalSecs++;
+  m = String(Math.floor(totalSecs / 60));
+  s = String(totalSecs % 60);
+  m = m.length < 2 ? '0' + m : m;
+  s = s.length < 2 ? '0' + s : s;
+
+  min.innerHTML = m;
+  sec.innerHTML = s;
+}
+
+function startTimer() {
   // start timer
-  // stop timer
-  // total time
+  setTimer = setInterval(timer, 1000);
 }
 
 // Reset stars
@@ -101,14 +124,6 @@ function shuffle(array) {
 for (var i = 0; i < cards.length; i++) {
   cards[i].addEventListener('click', cardFlip);
 }
-//   function() {
-//     // flip card
-//     cardFlip(cards[i]);
-//     // check card - a match - add to open card list
-//     // check card - not a match
-//     // check if all matches are met
-//     checkCard(cards[i]);
-//   });
 
 // Flip Card
 function cardFlip() {
@@ -117,6 +132,14 @@ function cardFlip() {
   this.classList.toggle('open');
   this.classList.toggle('show');
   //this.classList.toggle('match');
+  //   function() {
+  //     // flip card
+  //     cardFlip(cards[i]);
+  //     // check card - a match - add to open card list
+  //     // check card - not a match
+  //     // check if all matches are met
+  //     checkCard(cards[i]);
+  //   });
 }
 
 // Add to "openCards" list
@@ -150,6 +173,7 @@ function moves() {}
 function allMatched() {
   // Total pairs = 8
   //   - if pairs = 8 then stop and show modal, else continue
+  // stop timer
 }
 
 function checkStars() {
