@@ -69,25 +69,12 @@ function reset() {
   }
 
   // create/reset timer
-  min.innerHTML = '00';
-  sec.innerHTML = '00';
-  m = '0';
-  s = '0';
-  clearInterval(setTimer);
-
+  resetTimer();
   // reset stars
   resetStars();
   // reset counters
   resetCounters();
 }
-// click event for restart icon
-restart.addEventListener('click', reset);
-deck.addEventListener('click', startTimer);
-
-// click event for New Game button on modal
-
-// reset game on page load
-//window.onload = reset();
 
 // Create Timer
 function timer() {
@@ -105,6 +92,16 @@ function timer() {
 function startTimer() {
   // start timer
   setTimer = setInterval(timer, 1000);
+}
+
+// Reset Timer
+function resetTimer() {
+  min.innerHTML = '00';
+  sec.innerHTML = '00';
+  m = '0';
+  s = '0';
+  clearInterval(setTimer);
+  totalSecs = 0;
 }
 
 // Reset stars
@@ -159,14 +156,9 @@ function cardFlip() {
     clearInterval(setTimer);
     // Display modal
     setTimeout(() => {
-      modal();    
+      modal();
     }, 250);
   }
-
-  // check card - a match - add to open card list
-  // check card - not a match
-  // check if all matches are met
-  moves();
 }
 
 // Add to "openCards" list
@@ -176,17 +168,15 @@ function checkCard(cardChecked) {
 
   // if the list already has another card, check to see if the two cards match
   if (openCardsList.length > 1) {
-    // if the cards do match, lock the cards in the open position (cardMatched)
-    // update pairs count by 1
-    pairs++;
-    // if the cards do not match, remove the cards from the list and hide the card's symbol (cardNotMatched)
     // increment the move counter and display it on the page (moves)
-    totalMoves++;
-    movesSpan[0].innerHTML = totalMoves.toString();
-    // if all cards have matched, display a message with the final score (allMatched and modal)
-    if ((pairs = totalPairs)) {
-      // Display modal
-      modal();
+    moves();
+
+    if (openCardsList[0].type === openCardsList[1].type) {
+      // if the cards do match...
+      cardMatched();
+    } else {
+      // if the cards do not match...
+      cardNotMatched();
     }
   }
 }
@@ -216,14 +206,22 @@ function cardNotMatched() {
 
   //remove the cards from the list
   // timeout to flip cards back over
-  setTimeout(function() {
+  setTimeout(function () {
     openCardsList[0].className = 'card';
     openCardsList[1].className = 'card';
     openCardsList = [];
   }, 250);
 }
 
-function moves() {}
+// Track number of moves
+function moves() {
+  totalMoves++;
+  movesSpan[0].innerHTML = totalMoves.toString();
+  // start timer on first move
+  if (totalMoves == 1) {
+    resetTimer();
+    startTimer();
+  }
 
   checkStars();
 }
