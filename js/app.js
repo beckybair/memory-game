@@ -1,6 +1,10 @@
 /*
 * App JavaScript file
 */
+/*
+ * Mobile first - then tablet - then desktop
+ * Update Readme.md
+ */
 
 // Select from DOM
 //   - .stars - filled stars vs empty stars
@@ -32,6 +36,23 @@ let setTimer;
 // Open Cards and Matched Cards lists/arrays
 let openCardsList = [];
 let matchedCardsList = [];
+
+// Classes based on matched or not
+let cardsMatch = 'card match lock no-event';
+let cardsNotMatch = 'card show unmatch';
+
+// click event for restart icon
+restart.addEventListener('click', reset);
+
+// set up the event listener for a card. If a card is clicked:
+for (var i = 0; i < cards.length; i++) {
+  cards[i].addEventListener('click', cardFlip);
+}
+
+// click event for New Game button on modal
+
+// reset game on page load
+//window.onload = reset();
 
 // Display the cards on the page and reset board
 function reset() {
@@ -80,6 +101,7 @@ function timer() {
   sec.innerHTML = s;
 }
 
+// Start Timer
 function startTimer() {
   // start timer
   setTimer = setInterval(timer, 1000);
@@ -118,11 +140,6 @@ function shuffle(array) {
   }
 
   return array;
-}
-
-// set up the event listener for a card. If a card is clicked:
-for (var i = 0; i < cards.length; i++) {
-  cards[i].addEventListener('click', cardFlip);
 }
 
 // Flip Card
@@ -174,37 +191,69 @@ function checkCard(cardChecked) {
   }
 }
 
-function cardMatched() {}
+// selected cards match
+function cardMatched() {
+  // lock the cards in the open position (cardMatched)
+  openCardsList[0].className = cardsMatch;
+  openCardsList[1].className = cardsMatch;
 
-function cardNotMatched() {}
+  // add cards to matchedCardList
+  matchedCardsList.push(openCardsList[0]);
+  matchedCardsList.push(openCardsList[1]);
+
+  // Clear openCardList
+  openCardsList = [];
+
+  // update pairs count by 1
+  pairs++;
+}
+
+// selected cards do not match
+function cardNotMatched() {
+  // hide the card's symbol
+  openCardsList[0].className = cardsNotMatch;
+  openCardsList[1].className = cardsNotMatch;
+
+  //remove the cards from the list
+  // timeout to flip cards back over
+  setTimeout(function() {
+    openCardsList[0].className = 'card';
+    openCardsList[1].className = 'card';
+    openCardsList = [];
+  }, 250);
+}
 
 function moves() {}
 
-function allMatched() {
-  // Total pairs = 8
-  //   - if pairs = 8 then stop and show modal, else continue
-  // stop timer
+  checkStars();
 }
 
+// Track stars based on number of moves
 function checkStars() {
   // Number of stars
-  //   - 8 moves = 3 stars
-  //   - 9-10 = 2 stars
-  //   - 11-12 = 1 star
-  //   - >12 = no stars
+  // Starts with all 3 stars - up to 8 moves
+  if (totalMoves > 8 && totalMoves <= 10) {
+    //   - 9-10 moves = 2 stars
+    stars[2].classList.remove('fa-star');
+    stars[2].classList.add('fa-star-o');
+  } else if (totalMoves === 11 && totalMoves <= 12) {
+    //   - 11-12 moves = 1 star
+    stars[1].classList.remove('fa-star');
+    stars[1].classList.add('fa-star-o');
+  } else if (totalMoves > 12) {
+    //   - >12 moves = all empty stars
+    stars[0].classList.remove('fa-star');
+    stars[0].classList.add('fa-star-o');
+  }
 }
 
 // Setup Modal and display
 function modal() {
+  alert('you did it!');
   // - Congrats message
   // - Play again?
   // - Time it took
+
   // - Star rating
   // - Number of moves
 }
-
-/*
- * DONE - Use shuffle to random the cards
- * Mobile first - then tablet - then desktop
- * Update Readme.md
- */
