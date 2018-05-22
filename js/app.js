@@ -145,7 +145,6 @@ function cardFlip() {
   // display the card's symbol
   this.classList.toggle('open');
   this.classList.toggle('show');
-<<<<<<< HEAD
   this.classList.toggle('lock');
 
   // check card - add to open cards list, match/no match, all matched
@@ -160,19 +159,10 @@ function cardFlip() {
       modal();    
     }, 250);
   }
-||||||| merged common ancestors
-  
   // check card - a match - add to open card list
   // check card - not a match
   // check if all matches are met
   moves();
-=======
-
-  // check card - a match - add to open card list
-  // check card - not a match
-  // check if all matches are met
-  moves();
->>>>>>> modal
 }
 
 // Add to "openCards" list
