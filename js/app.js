@@ -48,7 +48,12 @@ function reset() {
   }
 
   // create/reset timer
-  resetTimer();
+  min.innerHTML = '00';
+  sec.innerHTML = '00';
+  m = '0';
+  s = '0';
+  clearInterval(setTimer);
+
   // reset stars
   resetStars();
   // reset counters
@@ -56,6 +61,7 @@ function reset() {
 }
 // click event for restart icon
 restart.addEventListener('click', reset);
+deck.addEventListener('click', startTimer);
 
 // click event for New Game button on modal
 
@@ -77,15 +83,6 @@ function timer() {
 function startTimer() {
   // start timer
   setTimer = setInterval(timer, 1000);
-}
-
-function resetTimer() {
-  min.innerHTML = '00';
-  sec.innerHTML = '00';
-  m = '0';
-  s = '0';
-  clearInterval(setTimer);
-  totalSecs = 0;  
 }
 
 // Reset stars
@@ -162,13 +159,13 @@ function checkCard(cardChecked) {
 
   // if the list already has another card, check to see if the two cards match
   if (openCardsList.length > 1) {
-    // if the cards do match...
-    //lock the cards in the open position (cardMatched)
+    // if the cards do match, lock the cards in the open position (cardMatched)
     // update pairs count by 1
     pairs++;
     // if the cards do not match, remove the cards from the list and hide the card's symbol (cardNotMatched)
     // increment the move counter and display it on the page (moves)
-    moves();
+    totalMoves++;
+    movesSpan[0].innerHTML = totalMoves.toString();
     // if all cards have matched, display a message with the final score (allMatched and modal)
     if ((pairs = totalPairs)) {
       // Display modal
@@ -181,15 +178,7 @@ function cardMatched() {}
 
 function cardNotMatched() {}
 
-function moves() {
-  totalMoves++;
-  movesSpan[0].innerHTML = totalMoves.toString();
-  // start timer on first move
-  if(totalMoves == 1) {
-    resetTimer();
-    startTimer();
-  }
-}
+function moves() {}
 
 function allMatched() {
   // Total pairs = 8
