@@ -7,12 +7,15 @@
 * [Contributing](#contributing)
 
 ## Instructions
+_How to play_
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+BABs Memory Game is a simple game of matching based on memory of where a card's match was last seen.  
 
-To get started, open `js/app.js` and start building out the app's functionality
+Simply click on a card to start the timer and start looking for pairs.  Once all cards are paired up the game is over.  A window will open up showing you how long it took you, how many moves and your star rating.  
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+Your star rating is based on the number of moves needed to complete the game.
+
+Click here to play the game:  https://beckybair.github.io/memory-game/
 
 ## Dependecies
 
