@@ -56,7 +56,7 @@ for (var i = 0; i < cards.length; i++) {
 // click event for New Game button on modal
 
 // reset game on page load
-//window.onload = reset();
+window.addEventListener('load', reset);
 
 // Display the cards on the page and reset board
 function reset() {
