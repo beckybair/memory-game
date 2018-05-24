@@ -251,7 +251,6 @@ function checkStars() {
 // Setup Modal and display
 function showModal() {
   const rating = document.getElementById('rating');
-  //console.log(rating);
   const playAgainBtn = document.getElementById('playAgain');
   let displayRating = rating.innerHTML;
 
