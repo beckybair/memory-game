@@ -8,7 +8,7 @@
 
 // Select from DOM
 //   - .stars - filled stars vs empty stars
-const stars = document.getElementsByClassName('star');
+const star = document.getElementsByClassName('star');
 //   - .moves
 let movesSpan = document.getElementsByClassName('moves');
 //   - .restart
@@ -17,6 +17,10 @@ const restart = document.querySelector('.restart');
 let deck = document.querySelector('.deck');
 let card = deck.querySelectorAll('.card');
 let cards = [...card];
+
+//   - .modal-body
+let modalBody = document.getElementById('modalBody');
+let mBody = '';
 
 // Create Counters
 //    - total number of moves / tries
@@ -90,7 +94,6 @@ function timer() {
 
 // Start Timer
 function startTimer() {
-  // start timer
   setTimer = setInterval(timer, 1000);
 }
 
@@ -107,8 +110,8 @@ function resetTimer() {
 // Reset stars
 function resetStars() {
   // change fa class using classList.toggle
-  for (var i = 0; i < stars.length; i++) {
-    stars[i].className = 'star fa fa-star';
+  for (var i = 0; i < star.length; i++) {
+    star[i].className = 'star fa fa-star';
   }
 }
 
@@ -156,7 +159,7 @@ function cardFlip() {
     clearInterval(setTimer);
     // Display modal
     setTimeout(() => {
-      modal();
+      showModal();
     }, 250);
   }
 }
@@ -206,7 +209,7 @@ function cardNotMatched() {
 
   //remove the cards from the list
   // timeout to flip cards back over
-  setTimeout(function () {
+  setTimeout(function() {
     openCardsList[0].className = 'card';
     openCardsList[1].className = 'card';
     openCardsList = [];
@@ -232,26 +235,42 @@ function checkStars() {
   // Starts with all 3 stars - up to 8 moves
   if (totalMoves > 8 && totalMoves <= 10) {
     //   - 9-10 moves = 2 stars
-    stars[2].classList.remove('fa-star');
-    stars[2].classList.add('fa-star-o');
+    star[2].classList.remove('fa-star');
+    star[2].classList.add('fa-star-o');
   } else if (totalMoves === 11 && totalMoves <= 12) {
     //   - 11-12 moves = 1 star
-    stars[1].classList.remove('fa-star');
-    stars[1].classList.add('fa-star-o');
+    star[1].classList.remove('fa-star');
+    star[1].classList.add('fa-star-o');
   } else if (totalMoves > 12) {
     //   - >12 moves = all empty stars
-    stars[0].classList.remove('fa-star');
-    stars[0].classList.add('fa-star-o');
+    star[0].classList.remove('fa-star');
+    star[0].classList.add('fa-star-o');
   }
 }
 
 // Setup Modal and display
-function modal() {
-  alert('you did it!');
-  // - Congrats message
-  // - Play again?
-  // - Time it took
+function showModal() {
+  const rating = document.getElementById('rating');
+  //console.log(rating);
+  const playAgainBtn = document.getElementById('playAgain');
+  let displayRating = rating.innerHTML;
 
-  // - Star rating
-  // - Number of moves
+  // click event for Play Again button
+  playAgainBtn.addEventListener('click', reset);
+
+  while (modalBody.hasChildNodes()) {
+    modalBody.removeChild(modalBody.lastChild);
+  }
+
+  // - Time it took  - Number of moves - Star rating
+  mBody = `
+    <p>It took you ${m}:${s} (mm:ss)</p>
+    <p>and in ${totalMoves} moves</p>
+    <p>You got a <ul id="rating" class="stars">${displayRating}<ul> Rating</p>
+    
+  `;
+
+  modalBody.innerHTML = mBody;
+
+  $('#showModal').modal();
 }

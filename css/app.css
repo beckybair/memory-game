@@ -145,3 +145,12 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+/*
+ * Styles for the Modal
+ */
+
+.modal-body .stars li {
+    list-style: none;
+    display: inline-block;
+}
