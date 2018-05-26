@@ -20,6 +20,7 @@ Click here to play the game:  https://beckybair.github.io/memory-game/
 ## Dependecies
 
 * Bootstrap 4.1 (CDN links used - CSS and JS)
+* Animate.css (found link here = https://github.com/daneden/animate.css - used the CDN link)
 * FontAwesome 4.6.1 (CDN link used)
 * Google Fonts Coda (Google link used)
 
