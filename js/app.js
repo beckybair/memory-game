@@ -1,10 +1,9 @@
 /*
 * App JavaScript file
 */
-/*
- * Mobile first - then tablet - then desktop
- * Update Readme.md
- */
+
+// TODO: Give Players ability to pause game
+// TODO: Keep track of game score: time/stars/moves
 
 // Select from DOM
 //   - .stars - filled stars vs empty stars
@@ -17,6 +16,9 @@ const restart = document.querySelector('.restart');
 let deck = document.querySelector('.deck');
 let card = deck.querySelectorAll('.card');
 let cards = [...card];
+
+//   - .modal-title
+let modalTitle = document.getElementById('modalTitle');
 
 //   - .modal-body
 let modalBody = document.getElementById('modalBody');
@@ -42,8 +44,8 @@ let openCardsList = [];
 let matchedCardsList = [];
 
 // Classes based on matched or not
-let cardsMatch = 'card match lock no-event';
-let cardsNotMatch = 'card show unmatch';
+let cardsMatch = 'card animated match lock no-event bounceIn';
+let cardsNotMatch = 'card animated show unmatch shake';
 
 // click event for restart icon
 restart.addEventListener('click', reset);
@@ -69,7 +71,7 @@ function reset() {
   // - add each card to the deck
   for (var i = 0; i < cards.length; i++) {
     deck.appendChild(cards[i]);
-    cards[i].className = 'card';
+    cards[i].className = 'card animated';
   }
 
   // create/reset timer
@@ -159,7 +161,7 @@ function cardFlip() {
     clearInterval(setTimer);
     // Display modal
     setTimeout(() => {
-      showModal();
+      showModalWindow();
     }, 250);
   }
 }
@@ -210,10 +212,10 @@ function cardNotMatched() {
   //remove the cards from the list
   // timeout to flip cards back over
   setTimeout(function() {
-    openCardsList[0].className = 'card';
-    openCardsList[1].className = 'card';
+    openCardsList[0].className = 'card animated';
+    openCardsList[1].className = 'card animated';
     openCardsList = [];
-  }, 250);
+  }, 800);
 }
 
 // Track number of moves
@@ -233,23 +235,26 @@ function moves() {
 function checkStars() {
   // Number of stars
   // Starts with all 3 stars - up to 8 moves
-  if (totalMoves > 8 && totalMoves <= 10) {
+  if (totalMoves > 8 && totalMoves <= 16) {
     //   - 9-10 moves = 2 stars
     star[2].classList.remove('fa-star');
     star[2].classList.add('fa-star-o');
-  } else if (totalMoves === 11 && totalMoves <= 12) {
+    modalTitle.innerHTML = 'WooHoo! Memory Managed!';
+  } else if (totalMoves === 17 && totalMoves <= 30) {
     //   - 11-12 moves = 1 star
     star[1].classList.remove('fa-star');
     star[1].classList.add('fa-star-o');
-  } else if (totalMoves > 12) {
+    modalTitle.innerHTML = 'Cool! Memory is Good!';
+  } else if (totalMoves > 30) {
     //   - >12 moves = all empty stars
     star[0].classList.remove('fa-star');
     star[0].classList.add('fa-star-o');
+    modalTitle.innerHTML = 'Good, but you could do better!';
   }
 }
 
 // Setup Modal and display
-function showModal() {
+function showModalWindow() {
   const rating = document.getElementById('rating');
   const playAgainBtn = document.getElementById('playAgain');
   let displayRating = rating.innerHTML;
