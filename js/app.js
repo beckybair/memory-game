@@ -152,7 +152,7 @@ function cardFlip() {
   this.classList.toggle('show');
   this.classList.toggle('lock');
 
-  // check card - add to open cards list, match/no match, all matched
+  // check card - add to open cards list, match/no match
   checkCard(this);
 
   // if all cards have matched...
@@ -215,7 +215,7 @@ function cardNotMatched() {
     openCardsList[0].className = 'card animated';
     openCardsList[1].className = 'card animated';
     openCardsList = [];
-  }, 800);
+  }, 250);
 }
 
 // Track number of moves
